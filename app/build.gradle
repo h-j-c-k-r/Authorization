@@ -19,6 +19,10 @@ android {
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
+    buildFeatures {
+        viewBinding = true
+    }
+
     buildTypes {
         release {
             minifyEnabled false
@@ -35,7 +39,6 @@ android {
 }
 
 dependencies {
-    kapt "com.google.dagger:dagger-compiler:$dagger_version"
     kapt "com.squareup.moshi:moshi-kotlin-codegen:1.12.0"
 
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
@@ -54,8 +57,9 @@ dependencies {
     implementation "androidx.navigation:navigation-fragment-ktx:$nav_version"
     implementation "androidx.navigation:navigation-ui-ktx:$nav_version"
 
-    //DI
-    implementation "com.google.dagger:dagger:$dagger_version"
+    //Koin
+    implementation "org.koin:koin-androidx-scope:$koin_version"
+    implementation "org.koin:koin-androidx-viewmodel:$koin_version"
 
     //UI
     implementation 'com.github.kirich1409:viewbindingpropertydelegate-noreflection:1.4.5'

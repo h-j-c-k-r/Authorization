@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="TextInputLayout" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+        <item name="android:textAppearance">@style/Text.16</item>
+    </style>
+
+    <style name="Text">
+        <item name="android:textColor">@color/text</item>
+    </style>
+
+    <style name="Text.16">
+        <item name="android:textSize">@dimen/font_16</item>
+    </style>
+
+    <style name="Text.20">
+        <item name="android:textSize">@dimen/font_20</item>
+    </style>
+
+
+</resources>

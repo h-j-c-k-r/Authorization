@@ -3,7 +3,7 @@ buildscript {
     ext {
         kotlin_version = "1.4.32"
         nav_version = "2.3.5"
-        dagger_version = "2.34"
+        koin_version = "2.2.2"
         retrofit_version = "2.9.0"
         moshi_version = "1.12.0"
     }
