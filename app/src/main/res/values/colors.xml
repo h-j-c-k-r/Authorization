@@ -7,6 +7,13 @@
     <color name="teal_700">#FF018786</color>
 
     <color name="text">#FF3D3D3D</color>
+    <color name="hint">#FF8F8F8F</color>
+    <color name="border">#FFD5D5D5</color>
+    <color name="status_bar">#FFF4F4F4</color>
+
+    <color name="blue">#FF4680FF</color>
+    <color name="purple">#FF8900A8</color>
+
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
 </resources>

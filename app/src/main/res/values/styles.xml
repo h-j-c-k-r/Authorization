@@ -1,11 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+
     <style name="TextInputLayout" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+        <item name="android:textColorHint">@color/hint</item>
+        <item name="hintTextColor">@color/blue</item>
+        <item name="hintTextAppearance">@style/Text.12</item>
+        <item name="boxStrokeColor">@color/box_color</item>
+        <item name="boxStrokeWidth">1dp</item>
+        <item name="boxStrokeWidthFocused">2dp</item>
+    </style>
+
+    <style name="TextInputEditText">
         <item name="android:textAppearance">@style/Text.16</item>
+        <item name="android:textColor">@color/text</item>
     </style>
 
     <style name="Text">
         <item name="android:textColor">@color/text</item>
+        <item name="android:fontFamily">sans-serif</item>
+    </style>
+
+    <style name="Text.12">
+        <item name="android:textSize">@dimen/font_12</item>
+    </style>
+
+    <style name="Text.14">
+        <item name="android:textSize">@dimen/font_14</item>
+        <item name="android:letterSpacing">0.05</item>
+        <item name="fontFamily">sans-serif-medium</item>
     </style>
 
     <style name="Text.16">
@@ -14,7 +36,23 @@
 
     <style name="Text.20">
         <item name="android:textSize">@dimen/font_20</item>
+        <item name="android:letterSpacing">0.01</item>
     </style>
 
+    <style name="Button" parent="Widget.MaterialComponents.Button">
+        <item name="textAllCaps">true</item>
+        <item name="android:insetTop">0dp</item>
+        <item name="android:insetBottom">0dp</item>
+        <item name="android:textAppearance">@style/Text.14</item>
+    </style>
+
+    <style name="Button.Filled">
+        <item name="android:backgroundTint">@color/purple</item>
+    </style>
+
+    <style name="Button.TextOnly">
+        <item name="android:backgroundTint">@android:color/transparent</item>
+        <item name="android:textColor">@color/purple</item>
+    </style>
 
 </resources>

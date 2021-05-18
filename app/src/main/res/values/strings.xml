@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">Authorization</string>
+
+    <string name="hint_email">Электронная почта</string>
+    <string name="hint_password">Пароль</string>
+
+    <string name="btn_login">Войти</string>
+    <string name="btn_create">Создать</string>
 </resources>
