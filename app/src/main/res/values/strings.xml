@@ -3,6 +3,7 @@
 
     <string name="hint_email">Электронная почта</string>
     <string name="hint_password">Пароль</string>
+    <string name="hint_password_complexity">Пароль должен состоять минимум из 6 символов, содержать минимум 1 цифру, 1 строчную и 1 заглавную буквы.</string>
 
     <string name="btn_login">Войти</string>
     <string name="btn_create">Создать</string>

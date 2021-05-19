@@ -55,4 +55,8 @@
         <item name="android:textColor">@color/purple</item>
     </style>
 
+    <style name="SnackbarText" parent="Widget.MaterialComponents.Snackbar.TextView">
+        <item name="android:maxLines">5</item>
+    </style>
+
 </resources>
