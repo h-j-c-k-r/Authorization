@@ -2,24 +2,33 @@ package test.handh.authorization.ui.authorization
 
 import android.os.Bundle
 import android.view.View
+import android.widget.Toast
 import androidx.core.content.ContextCompat
+import androidx.core.view.isVisible
 import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.Fragment
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.textfield.TextInputLayout
+import org.koin.androidx.viewmodel.ext.android.viewModel
 import test.handh.authorization.R
 import test.handh.authorization.app.extensions.hideKeyboard
 import test.handh.authorization.app.extensions.showError
 import test.handh.authorization.app.extensions.showSnackbar
 import test.handh.authorization.databinding.FragmentAuthorizationBinding
+import test.handh.authorization.ui.states.WeatherState
+import test.handh.authorization.viewmodels.AuthorizationViewModel
 
 class AuthorizationFragment : Fragment(R.layout.fragment_authorization) {
     private val binding: FragmentAuthorizationBinding by viewBinding(FragmentAuthorizationBinding::bind)
 
+    private val viewModel: AuthorizationViewModel by viewModel()
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
         setupPasswordIcon(true)
         setupListeners()
+        setupObservers()
         invalidateButtons()
     }
 
@@ -53,7 +62,8 @@ class AuthorizationFragment : Fragment(R.layout.fragment_authorization) {
             }
 
             btnLogin.setOnClickListener {
-                invalidateFields()
+                if (invalidateFields())
+                    viewModel.getWeather(35, 139)
             }
 
             toolbar.setOnMenuItemClickListener {
@@ -62,6 +72,28 @@ class AuthorizationFragment : Fragment(R.layout.fragment_authorization) {
                 }
                 true
             }
+        }
+    }
+
+    private fun setupObservers() {
+        viewModel.weatherState.observe(viewLifecycleOwner) {
+            when (it) {
+                is WeatherState.Success -> {
+                    showLoading(false)
+                    showSnackbar(binding.root, it.response.weather[0].description, Snackbar.LENGTH_LONG)
+                }
+                WeatherState.Loading -> {
+                    showLoading(true)
+                }
+                is WeatherState.Error -> {
+                    showLoading(false)
+                    showSnackbar(binding.root, it.message, Snackbar.LENGTH_SHORT, R.color.hint)
+                }
+                WeatherState.Idle -> {
+                    showLoading(false)
+                }
+            }
+
         }
     }
 
@@ -124,6 +156,18 @@ class AuthorizationFragment : Fragment(R.layout.fragment_authorization) {
                 }
             } else {
                 menu.clear()
+            }
+        }
+    }
+
+    private fun showLoading(show: Boolean) {
+        with(binding) {
+            content.isVisible = !show
+            if (show) {
+                loader.show()
+            }
+            else {
+                loader.hide()
             }
         }
     }

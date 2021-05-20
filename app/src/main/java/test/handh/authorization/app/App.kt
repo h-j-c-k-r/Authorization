@@ -4,8 +4,11 @@ import android.app.Application
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
 import org.koin.core.context.startKoin
+import test.handh.authorization.app.di.module.networkModule
+import test.handh.authorization.app.di.module.repositoryModule
+import test.handh.authorization.app.di.module.viewModelModule
 
-class App: Application() {
+class App : Application() {
 
     override fun onCreate() {
         super.onCreate()
@@ -13,7 +16,7 @@ class App: Application() {
         startKoin {
             androidContext(this@App)
             androidLogger()
-            modules(listOf())
+            modules(listOf(networkModule, repositoryModule, viewModelModule))
         }
     }
 }

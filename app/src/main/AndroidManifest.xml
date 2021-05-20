@@ -3,6 +3,7 @@
     package="test.handh.authorization">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 
     <application
         android:name=".app.App"
@@ -11,7 +12,8 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.Authorization">
+        android:theme="@style/Theme.Authorization"
+        android:usesCleartextTraffic="true">
         <activity
             android:name=".ui.MainActivity"
             android:windowSoftInputMode="adjustResize">

@@ -10,8 +10,14 @@ fun Fragment.hideKeyboard() {
     view?.let { requireActivity().hideKeyboard(it) }
 }
 
-fun Fragment.showSnackbar(view: View, stringResId: Int, length: Int) {
+fun Fragment.showSnackbar(view: View, stringResId: Int, length: Int, colorResId: Int = R.color.purple) {
     Snackbar.make(view, stringResId, length)
-        .setBackgroundTint(ContextCompat.getColor(requireContext(), R.color.purple))
+        .setBackgroundTint(ContextCompat.getColor(requireContext(), colorResId))
+        .show()
+}
+
+fun Fragment.showSnackbar(view: View, string: String, length: Int, colorResId: Int = R.color.purple) {
+    Snackbar.make(view, string, length)
+        .setBackgroundTint(ContextCompat.getColor(requireContext(), colorResId))
         .show()
 }
