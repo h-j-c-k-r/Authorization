@@ -1,9 +1,16 @@
 package test.handh.authorization.ui.authorization
 
+import android.Manifest
+import android.content.Context.LOCATION_SERVICE
+import android.content.pm.PackageManager
+import android.location.Location
+import android.location.LocationListener
+import android.location.LocationManager
 import android.os.Bundle
 import android.view.View
-import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
+import androidx.core.content.ContextCompat.checkSelfPermission
 import androidx.core.view.isVisible
 import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.Fragment
@@ -13,8 +20,10 @@ import com.google.android.material.textfield.TextInputLayout
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import test.handh.authorization.R
 import test.handh.authorization.app.extensions.hideKeyboard
+import test.handh.authorization.app.extensions.round
 import test.handh.authorization.app.extensions.showError
 import test.handh.authorization.app.extensions.showSnackbar
+import test.handh.authorization.data.model.WeatherResponse
 import test.handh.authorization.databinding.FragmentAuthorizationBinding
 import test.handh.authorization.ui.states.WeatherState
 import test.handh.authorization.viewmodels.AuthorizationViewModel
@@ -23,6 +32,26 @@ class AuthorizationFragment : Fragment(R.layout.fragment_authorization) {
     private val binding: FragmentAuthorizationBinding by viewBinding(FragmentAuthorizationBinding::bind)
 
     private val viewModel: AuthorizationViewModel by viewModel()
+
+    private val locationListener: LocationListener by lazy { LocationListener { } }
+
+    private val locationManager: LocationManager by lazy {
+        requireContext().getSystemService(
+            LOCATION_SERVICE
+        ) as LocationManager
+    }
+
+    private val locationPermission =
+        registerForActivityResult(ActivityResultContracts.RequestPermission()) { granted ->
+            when {
+                granted -> {
+                    binding.btnLogin.performClick()
+                }
+                else -> {
+                    showSnackbar(binding.root, getString(R.string.hint_allow_get_location), Snackbar.LENGTH_LONG)
+                }
+            }
+        }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -62,8 +91,24 @@ class AuthorizationFragment : Fragment(R.layout.fragment_authorization) {
             }
 
             btnLogin.setOnClickListener {
-                if (invalidateFields())
-                    viewModel.getWeather(35, 139)
+                if (checkSelfPermission(
+                        requireContext(),
+                        Manifest.permission.ACCESS_FINE_LOCATION
+                    ) != PackageManager.PERMISSION_GRANTED
+                ) {
+                    locationPermission.launch(Manifest.permission.ACCESS_FINE_LOCATION)
+                    return@setOnClickListener
+                }
+
+                locationManager.requestLocationUpdates(
+                    LocationManager.GPS_PROVIDER, LOCATION_UPDATE_PERIOD,
+                    LOCATION_DISTANCE, locationListener
+                )
+
+                val location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER)
+
+                if (invalidateFields() && location != null)
+                    viewModel.getWeather(location.latitude.toInt(), location.longitude.toInt())
             }
 
             toolbar.setOnMenuItemClickListener {
@@ -80,7 +125,7 @@ class AuthorizationFragment : Fragment(R.layout.fragment_authorization) {
             when (it) {
                 is WeatherState.Success -> {
                     showLoading(false)
-                    showSnackbar(binding.root, it.response.weather[0].description, Snackbar.LENGTH_LONG)
+                    showWeather(it.response)
                 }
                 WeatherState.Loading -> {
                     showLoading(true)
@@ -148,6 +193,23 @@ class AuthorizationFragment : Fragment(R.layout.fragment_authorization) {
         }
     }
 
+    private fun showWeather(weather: WeatherResponse) {
+        with(weather) {
+            showSnackbar(
+                binding.root,
+                getString(
+                    R.string.success_weather_request,
+                    name,
+                    this.weather[0].description,
+                    (main.temp - KELVIN_TO_CELSIUM).round(1),
+                    (main.feelsLike - KELVIN_TO_CELSIUM).round(1),
+                    (wind.speed).round(1)
+                ),
+                Snackbar.LENGTH_LONG
+            )
+        }
+    }
+
     private fun showMenu(show: Boolean) {
         with(binding.toolbar) {
             if (show) {
@@ -165,14 +227,18 @@ class AuthorizationFragment : Fragment(R.layout.fragment_authorization) {
             content.isVisible = !show
             if (show) {
                 loader.show()
-            }
-            else {
+            } else {
                 loader.hide()
             }
         }
     }
 
     companion object {
+        private const val LOCATION_UPDATE_PERIOD = 60000L
+        private const val LOCATION_DISTANCE = 50f
+
+        private const val KELVIN_TO_CELSIUM = 272.1f
+
         private const val REGEX_EMAIL =
             "[A-Z0-9a-z._%+\\-]{1,256}@[A-Za-z0-9.\\-]{1,256}\\.[A-Za-z]{2,64}"
         private const val REGEX_PASSWORD = "^(?=.*[0-9])(?=.*[a-zа-я])(?=.*[A-ZА-Я]).{6,}\$"

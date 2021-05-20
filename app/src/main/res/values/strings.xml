@@ -5,9 +5,12 @@
     <string name="hint_password">Пароль</string>
     <string name="hint_password_complexity">Пароль должен состоять минимум из 6 символов, содержать минимум 1 цифру, 1 строчную и 1 заглавную буквы.</string>
     <string name="hint_user_created">Пользователь успешно создан</string>
+    <string name="hint_allow_get_location">Необходимо разрешить доступ к местоположению устройства</string>
 
     <string name="error_incorrect_email">Некорректный адрес электронной почты</string>
     <string name="error_incorrect_password">Пароль не соответствует требованиям</string>
+
+    <string name="success_weather_request">Погода в городе %s: %s, температура - %s°; ощущается как %s°; скорость ветра - %s м/с.</string>
 
     <string name="btn_login">Войти</string>
     <string name="btn_create">Создать</string>
