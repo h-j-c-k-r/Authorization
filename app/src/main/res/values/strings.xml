@@ -6,6 +6,9 @@
     <string name="hint_password_complexity">Пароль должен состоять минимум из 6 символов, содержать минимум 1 цифру, 1 строчную и 1 заглавную буквы.</string>
     <string name="hint_user_created">Пользователь успешно создан</string>
 
+    <string name="error_incorrect_email">Некорректный адрес электронной почты</string>
+    <string name="error_incorrect_password">Пароль не соответствует требованиям</string>
+
     <string name="btn_login">Войти</string>
     <string name="btn_create">Создать</string>
 </resources>

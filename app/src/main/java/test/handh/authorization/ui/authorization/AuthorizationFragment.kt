@@ -97,11 +97,11 @@ class AuthorizationFragment : Fragment(R.layout.fragment_authorization) {
         var result = true
         with(binding) {
             if (!Regex(REGEX_EMAIL).matches(etEmail.text.toString())) {
-                tilEmail.showError(true)
+                tilEmail.showError(true, getString(R.string.error_incorrect_email))
                 result = false
             }
             if (!Regex(REGEX_PASSWORD).matches(etPassword.text.toString())) {
-                tilPassword.showError(true)
+                tilPassword.showError(true, getString(R.string.error_incorrect_password))
                 result = false
             }
         }

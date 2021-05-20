@@ -2,12 +2,11 @@ package test.handh.authorization.app.extensions
 
 import com.google.android.material.textfield.TextInputLayout
 
-fun TextInputLayout.showError(show: Boolean) {
+fun TextInputLayout.showError(show: Boolean, errorText: String = "") {
+    isErrorEnabled = show
     error = if (show) {
-        ERROR
+        errorText
     } else {
         null
     }
 }
-
-private const val ERROR = "error"

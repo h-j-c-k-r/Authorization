@@ -40,12 +40,11 @@
             android:orientation="vertical"
             android:paddingHorizontal="@dimen/margin_32">
 
-
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/til_email"
                 style="@style/TextInputLayout"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/til_size"
+                android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/margin_24"
                 android:hint="@string/hint_email">
 
@@ -62,7 +61,7 @@
                 android:id="@+id/til_password"
                 style="@style/TextInputLayout"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/til_size"
+                android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/margin_20"
                 android:hint="@string/hint_password">
 
