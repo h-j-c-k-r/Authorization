@@ -40,6 +40,7 @@
     </style>
 
     <style name="Button" parent="Widget.MaterialComponents.Button">
+        <item name="android:layout_height">42dp</item>
         <item name="textAllCaps">true</item>
         <item name="android:insetTop">0dp</item>
         <item name="android:insetBottom">0dp</item>
@@ -47,16 +48,22 @@
     </style>
 
     <style name="Button.Filled">
-        <item name="android:backgroundTint">@color/purple</item>
-    </style>
-
-    <style name="Button.TextOnly">
-        <item name="android:backgroundTint">@android:color/transparent</item>
-        <item name="android:textColor">@color/purple</item>
+        <item name="backgroundTint">@color/button_tint</item>
     </style>
 
     <style name="SnackbarText" parent="Widget.MaterialComponents.Snackbar.TextView">
         <item name="android:maxLines">5</item>
+    </style>
+
+    <style name="Toolbar" parent="Theme.Authorization">
+        <item name="actionMenuTextAppearance">@style/ToolbarMenuItem</item>
+        <item name="android:actionMenuTextColor">@color/purple</item>
+    </style>
+
+    <style name="ToolbarMenuItem" parent="ThemeOverlay.MaterialComponents.Toolbar.Primary">
+        <item name="android:textSize">@dimen/font_15</item>
+        <item name="textAllCaps">true</item>
+        <item name="fontFamily">sans-serif-medium</item>
     </style>
 
 </resources>
